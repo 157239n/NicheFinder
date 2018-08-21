@@ -31,3 +31,12 @@ jobs:
       # run tests!
       - run: echo "Testing"
       - run: mvn test
+
+      # create executable jar
+      - run: echo "Creating executable jars"
+      - run: mvn clean compile assembly:single
+      # copy executable to the project directory
+      - run: mv target/niche-finder-1.0-jar-with-dependencies.jar NicheFinder.jar
+      # storing the executable jar
+      - store_artifacts:
+          path: NicheFinder.jar

@@ -20,7 +20,7 @@ Download ChromeDriver at http://chromedriver.chromium.org/downloads.
 
 At the time of making this, the latest version is 2.41:
 
-![](https://i.imgur.com/dazkAUn.png)
+![](https://i.imgur.com/dazkAUn.png?1)
 
 Click on the ChromeDriver 2.41 link (or whatever the lastest version is) and this shows up:
 

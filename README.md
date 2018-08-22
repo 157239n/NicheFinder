@@ -8,6 +8,10 @@ This will automatically search for universities on Niche and grab their data so 
 
 ### Go to the releases page and download the NicheFinder.jar file
 
+![](https://i.imgur.com/z4YyOUC.png)
+
+In the assets section, click on NicheFinder.jar and the file should download right away.
+
 ### Create a dedicated folder and put the NicheFinder.jar file there
 
 Simple enough:

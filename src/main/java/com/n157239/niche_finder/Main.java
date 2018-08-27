@@ -73,6 +73,9 @@ public class Main {
         if (!Niche.removePastSchools(driver)) {//we need to delete the list of schools because niche will retain the schools we added to our account and because we choose the latest school we have added, some times we might not get the school we are after.
             //// Please note that because of this, you shouldn't probably use your own account and use the nicheexample@gmail.com I have created for you guys already.
             throw new AssertionError("Failed to delete past schools");
+        } else { //extra removing schools, to make sure that no school really is behind
+            Niche.removePastSchools(driver);
+            Niche.removePastSchools(driver);
         }
 
         //automate and generate results
@@ -388,7 +391,7 @@ public class Main {
 
                     try {
                         WebElement netPrice = driver.findElement(By.id("net-price"));
-                        existingHashMap.put("(Niche H1) Net price", netPrice.findElement(By.className("profile__bucket--1")).findElement(By.className("scalar__value")).findElement(By.tagName("span")).getAttribute("innerHTML"));
+                        existingHashMap.put("(Niche H1) Net price", netPrice.findElement(By.className("profile__bucket--1")).findElement(By.className("scalar__value")).findElement(By.tagName("span")).getText());
                         existingHashMap.put("(Niche H2) Net price calculator", netPrice.findElement(By.className("profile__bucket--1")).findElement(By.className("profile__website")).findElement(By.tagName("a")).getAttribute("href"));
                     } catch (RuntimeException e) {
                         //in case this one fails
@@ -396,15 +399,15 @@ public class Main {
 
                     try {
                         WebElement stickerPrice = driver.findElement(By.id("sticker-price"));
-                        existingHashMap.put("(Niche I1) In-State Tuition", stickerPrice.findElement(By.className("profile__bucket--1")).findElement(By.className("scalar__value")).findElement(By.tagName("span")).getAttribute("innerHTML"));
-                        existingHashMap.put("(Niche I2) Out-of-State Tuition", stickerPrice.findElement(By.className("profile__bucket--2")).findElement(By.className("scalar__value")).findElement(By.tagName("span")).getAttribute("innerHTML"));
+                        existingHashMap.put("(Niche I1) In-State Tuition", stickerPrice.findElement(By.className("profile__bucket--1")).findElement(By.className("scalar__value")).findElement(By.tagName("span")).getText());
+                        existingHashMap.put("(Niche I2) Out-of-State Tuition", stickerPrice.findElement(By.className("profile__bucket--2")).findElement(By.className("scalar__value")).findElement(By.tagName("span")).getText());
                     } catch (RuntimeException e) {
                         //in case this one fails
                     }
 
                     try {
                         WebElement overallValue = driver.findElement(By.id("overall-value"));
-                        existingHashMap.put("(Niche J1) Overall value", overallValue.findElement(By.className("niche__grade")).getAttribute("innerHTML"));
+                        existingHashMap.put("(Niche J1) Overall value", overallValue.findElement(By.className("niche__grade")).getText());
                     } catch (RuntimeException e) {
                         //in case this one fails
                     }
@@ -433,7 +436,7 @@ public class Main {
                 if (debugMode) System.out.println("Number of schools found: " + listOfSchools.size());
 
                 WebElement firstResultFound = listOfSchools.get(0).findElement(By.tagName("section")).findElement(By.tagName("div")).findElement(By.tagName("h3")).findElement(By.tagName("a"));
-                if (debugMode) System.out.println("School chosen: " + firstResultFound.getAttribute("innerHTML"));
+                if (debugMode) System.out.println("School chosen: " + firstResultFound.getText());
                 return firstResultFound.getAttribute("href");
             } catch (RuntimeException e) {
                 return "";
@@ -478,7 +481,7 @@ public class Main {
                 }
 
                 try {
-                    existingHashMap.put("(US News A1) School name", driver.findElement(By.className("hero-heading")).getAttribute("innerHTML").trim());
+                    existingHashMap.put("(US News A1) School name", driver.findElement(By.className("hero-heading")).getText().trim());
                     existingHashMap.put("(US News A2) School address", driver.findElement(By.className("hero-ranking-data-contact")).getText());
                 } catch (RuntimeException e) {
                     //in case this one fails
@@ -486,14 +489,14 @@ public class Main {
 
                 try {//getting the rank and overall score
                     WebElement rankingBox = driver.findElement(By.className("hero-ranking-data-rank"));
-                    if (rankingBox.getAttribute("innerHTML").contains("Unranked")) {
+                    if (rankingBox.getText().contains("Unranked")) {
                         existingHashMap.put("(US News B1) Rank", "Unranked");
                     } else {
                         WebElement rank = rankingBox.findElement(By.tagName("strong"));//like "#3"
                         WebElement type = rankingBox.findElement(By.tagName("a"));//like "National Universities"
-                        existingHashMap.put("(US News B1) Rank", rank.getText() + " " + type.getAttribute("innerHTML"));
+                        existingHashMap.put("(US News B1) Rank", rank.getText() + " " + type.getText());
                         WebElement score = rankingBox.findElement(By.className("hide-for-small-only")).findElement(By.tagName("span"));//like 51/100.0
-                        existingHashMap.put("(US News B2) Overall score", score.getAttribute("innerHTML") + "/100");
+                        existingHashMap.put("(US News B2) Overall score", score.getText() + "/100");
                     }
                 } catch (RuntimeException e) {
                     //in case this one fails
